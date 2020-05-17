@@ -52,7 +52,23 @@ app.get("/", function(req, res) {
     res.send(html);
   });
 });
-//     * Create a `/coolness-chart` route that will display all the actors and their data ordered by their coolness points.
-// app.get("/coolness", (req, res))
+
+// "coolness" route
+app.get("/coolness", (req, res) => {
+  connection.query("select * from characters order by coolness desc", (err, result) => {
+    if (err) throw err;
+
+    let html = "<h1>Characters</h1>";
+    html += "<ul>";
+
+    result.forEach(character => {
+      html += `<li><p>${character.name}</p>`;
+      html += `<p>coolness points: ${character.coolness}</p></li>`;
+    });
+    
+    html += "</ul>";
+    res.send(html);
+  })
+})
 
 app.listen(PORT, () => console.log(`Listening http://localhost:${PORT}`));
