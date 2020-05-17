@@ -18,15 +18,14 @@ CREATE TABLE characters (
   PRIMARY KEY(id)
 );
 
--- Inserted a set of records into the table
--- INSERT INTO schools (name)
--- VALUES ("Hogwarts School of Witchcraft");
+insert into characters (name, coolness, attitude)
+values ("Jerry", 2,"uptight");
 
--- INSERT INTO schools (name)
--- VALUES ("Castelobruxo");
+insert into characters (name, coolness, attitude)
+values ("Elaine", 3, "snotty");
 
--- INSERT INTO schools (name)
--- VALUES ("Durmstrang Institute");
+insert into characters (name, coolness, attitude)
+values ("George", 0, "jerk");
 
--- INSERT INTO schools (name)
--- VALUES ("Beauxbatons Academy of Magic");
+insert into characters (name, coolness, attitude)
+values ("Kramer", 4, "aloof");

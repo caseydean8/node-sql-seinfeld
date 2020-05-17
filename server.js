@@ -2,13 +2,13 @@
 
 //     * Create a `/cast` route that will display all the actors and their data ordered by their id's.
 
-//     * Create a `/coolness-chart` route that will display all the actors and their data ordered by their coolness points.
-
 //     * Create a `/attitude-chart/:att` route that will display all the actors for a specific type of attitude.
 const express = require("express");
 const mysql = require("mysql");
 
 const app = express();
+
+const PORT = process.env.PORT || 8080;
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -26,4 +26,33 @@ connection.connect(err => {
   console.log(`connected as id ${connection.threadId}`);
 })
 
-// app.listen()
+// Routes
+app.get("/", function(req, res) {
+
+  // If the main route is hit, then we initiate a SQL query to grab all records.
+  // All of the resulting records are stored in the variable "result."
+  connection.query("SELECT * FROM characters", (err, result) => {
+    if (err) throw err;
+    // We then begin building out HTML elements for the page.
+    var html = "<h1> Seinfeld Characters </h1>";
+
+    // Here we begin an unordered list.
+    html += "<ul>";
+
+    // We then use the retrieved records from the database to populate our HTML file.
+    for (var i = 0; i < result.length; i++) {
+      html += "<li><p> ID: " + result[i].id + "</p>";
+      html += "<p>" + result[i].name + " </p></li>";
+    }
+
+    // We close our unordered list.
+    html += "</ul>";
+
+    // Finally we send the user the HTML file we dynamically created.
+    res.send(html);
+  });
+});
+//     * Create a `/coolness-chart` route that will display all the actors and their data ordered by their coolness points.
+// app.get("/coolness", (req, res))
+
+app.listen(PORT, () => console.log(`Listening http://localhost:${PORT}`));
